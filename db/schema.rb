@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_18_062355) do
+ActiveRecord::Schema.define(version: 2020_08_18_091412) do
 
   create_table "entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -29,6 +29,16 @@ ActiveRecord::Schema.define(version: 2020_08_18_062355) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["room_id"], name: "index_messages_on_room_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "follow_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["follow_id"], name: "index_relationships_on_follow_id"
+    t.index ["user_id", "follow_id"], name: "index_relationships_on_user_id_and_follow_id", unique: true
+    t.index ["user_id"], name: "index_relationships_on_user_id"
   end
 
   create_table "rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -54,4 +64,6 @@ ActiveRecord::Schema.define(version: 2020_08_18_062355) do
   add_foreign_key "entries", "users"
   add_foreign_key "messages", "rooms"
   add_foreign_key "messages", "users"
+  add_foreign_key "relationships", "users"
+  add_foreign_key "relationships", "users", column: "follow_id"
 end

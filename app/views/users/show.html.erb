@@ -2,20 +2,38 @@
 
 <h2><%= @user.name %></h2>
 
+<h3>年齢</h3>
+<%= @user.age %>
+<h3>性別</h3>
+<%= @user.sex %>
+<h3>出身地</h3>
+<%= @user.birthaddress %>
+<h3>自己紹介</h3>
+<%= @user.introduce %>
+<h3>作成日</h3>
+<%= @user.created_at %>
+<h3>最終更新日</h3>
+<%= @user.updated_at %>
+
 <% if @user.id == current_user.id %>
   <p><%= @user.email %><p>
 <% else %>
-  <%= render "relationships/follow_button", user: @user %>
-  <% if @isRoom == true %>
-    <p><a href="/rooms/<%= @roomId %>">チャットへ</a>
+
+  <% unless current_user.following?(@user) %>
+    <%= render "relationships/follow_button", user: @user %>
   <% else %>
-    <%= form_for @room do |f| %>
-      <%= fields_for @entry do |e| %>
-        <%= e.hidden_field :user_id, :value=> @user.id %>
+    <%= render "relationships/follow_button", user: @user %>
+    <% if @isRoom == true %>
+      <p><a href="/rooms/<%= @roomId %>">チャットへ</a>
+    <% else %>
+      <%= form_for @room do |f| %>
+        <%= fields_for @entry do |e| %>
+          <%= e.hidden_field :user_id, :value=> @user.id %>
+        <% end %>
+        <%= f.submit "チャットを始める" %>
       <% end %>
-      <%= f.submit "チャットを始める" %>
     <% end %>
   <% end %>
 <% end %>
-
+<%= link_to 'プロフィール変更', edit_user_registration_path %>
 <%= link_to "ユーザー一覧に戻る", users_path %>

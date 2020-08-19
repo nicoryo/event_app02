@@ -29,4 +29,9 @@ class RelationshipsController < ApplicationController
     @user = User.find(params[:follow_id])
   end
 
+  protected
+    def update_resource(resource, params)
+      resource.update_without_password(params)
+  end
+
 end

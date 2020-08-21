@@ -14,9 +14,13 @@
 <%= @user.created_at %>
 <h3>最終更新日</h3>
 <%= @user.updated_at %>
+<h3>ハッシュ</h3>
+<%= render_with_hashtags(@user.hashbody) %>
 
 <% if @user.id == current_user.id %>
   <p><%= @user.email %><p>
+  <%= link_to 'プロフィール変更', edit_user_registration_path %>
+
 <% else %>
 
   <% unless current_user.following?(@user) %>
@@ -35,5 +39,6 @@
     <% end %>
   <% end %>
 <% end %>
-<%= link_to 'プロフィール変更', edit_user_registration_path %>
+
+
 <%= link_to "ユーザー一覧に戻る", users_path %>

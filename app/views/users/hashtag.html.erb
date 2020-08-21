@@ -1,0 +1,11 @@
+<% if params[:name] == nil %>
+
+<% else %>
+  <div class= "hashtag-name">
+    <% @hashtags.sort.reverse.each do |count| %>
+        <% count[1].each do |hashtag| %>
+          <%= link_to  "##{hashtag.hashname} (#{hashtag.users.count}) 件","/user/hashtag/#{hashtag.hashname}",data: {"turbolinks" => false} %>  -->
+        <% end %>
+    <% end %>
+  </div>
+<% end %>

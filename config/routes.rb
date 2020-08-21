@@ -7,4 +7,7 @@ Rails.application.routes.draw do
   resources :messages, :only => [:create]
   resources :rooms, :only => [:create, :show, :index]
   resources :relationships, only: [:create, :destroy]
+  get '/user/hashtag/:name' => 'users#hashtag'
+  get '/user/hashtag' => 'users#hashtag'
+
 end
